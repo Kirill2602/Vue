@@ -3,24 +3,37 @@
     <p>Результат: {{ result }}</p>
     <div class="inputs">
       <label for="operand1">Первое число
-        <input placeholder="0"
+        <input value="Первое число" placeholder="0"
+               v-bind:disabled="radio !== 'Первое число' "
                v-model.number="operand1"
                class="operand1"
                id="operand1"
                type="text"></label>
       <label for="operand2">Второе число
-        <input placeholder="0"
-               v-model.number="operand2"
-               id="operand2"
-               type="text"></label>
+        <input
+            placeholder="0"
+            v-bind:disabled="radio !== 'Второе число'"
+            v-model.number="operand2"
+            id="operand2"
+            type="text"></label>
     </div>
     <div class="buttons">
-      <button @click="plus" class="btn">+</button>
-      <button @click="minus" class="btn">-</button>
-      <button @click="multiplication" class="btn">*</button>
-      <button @click="division" class="btn">/</button>
-      <button @click="exponentiation" class="btn">Возведение в степень</button>
-      <button @click="integerDivision" class="btn">Целочисленное деление</button>
+      <button v-bind:disabled="operand1 === '' || operand2 === ''" class="btn" v-for="operator in operators"
+              :key="operator" @click="calculate(operator)">{{ operator }}
+      </button>
+    </div>
+    <div><label for="check"><input v-model="checked" id="check" type="checkbox">Показать/Скрыть экранную
+      клавиатуру</label></div>
+
+    <div v-show="checked">
+      <button @click="getNumb(numb)" class="btn"
+              v-for="(numb,index) in numberKeyboard"
+              :key="index">{{ numb }}
+      </button>
+    </div>
+    <div>
+      <label for="radio1">Первое число<input value="Первое число" v-model="radio" name="radio" id="radio1" type="radio"></label>
+      <label for="radio2">Второе число<input value="Второе число" v-model="radio" name="radio" id="radio2" type="radio"></label>
     </div>
 
   </div>
@@ -33,37 +46,83 @@ export default {
     return {
       operand1: '',
       operand2: '',
-      result: ''
+      result: '',
+      operators: [
+        '+',
+        '-',
+        '*',
+        '/',
+        'Целочисленное деление',
+        'Возведение в степень'
+      ],
+      numberKeyboard: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, '←'
+      ],
+      checked: true,
+      radio: 'Первое число'
     }
   },
   methods: {
     plus() {
-      return this.result = this.operand1 + this.operand2;
+      this.result = Number(this.operand1) + Number(this.operand2);
     },
     minus() {
-      return this.result = this.operand1 - this.operand2;
+      this.result = this.operand1 - this.operand2;
     },
     multiplication() {
-      return this.result = this.operand1 * this.operand2;
+      this.result = this.operand1 * this.operand2;
     },
     division() {
-      if (this.operand2 !== 0) {
-        return this.result = (this.operand1 / this.operand2).toFixed(3);
+      if (this.operand2 !== '0') {
+        this.result = (this.operand1 / this.operand2);
       } else {
         alert('Делить на 0 нельзя!')
       }
 
     },
     exponentiation() {
-      return this.result = this.operand1 ** this.operand2
+      this.result = this.operand1 ** this.operand2
     },
     integerDivision() {
-      if (this.operand2 !== 0 && this.operand1 / this.operand2 >= 0) {
-        return this.result = Math.floor(this.operand1 / this.operand2)
-      } else if (this.operand2 !== 0 && this.operand1 / this.operand2 <= 0) {
-        return this.result = Math.ceil(this.operand1 / this.operand2)
-      } else if (this.operand2 === 0) {
+      if (this.operand2 !== '0' && this.operand1 / this.operand2 >= 0) {
+        this.result = Math.floor(this.operand1 / this.operand2)
+      } else if (this.operand2 !== '0' && this.operand1 / this.operand2 <= 0) {
+        this.result = Math.ceil(this.operand1 / this.operand2)
+      } else if (this.operand2 === '0') {
         alert('Делить на 0 нельзя!')
+      }
+    },
+    calculate(operation = "+") {
+      switch (operation) {
+        case "+":
+          this.plus();
+          break;
+        case "-":
+          this.minus();
+          break;
+        case "*":
+          this.multiplication();
+          break;
+        case "/":
+          this.division();
+          break;
+        case "Возведение в степень":
+          this.exponentiation();
+          break;
+        case "Целочисленное деление":
+          this.integerDivision();
+          break;
+      }
+    },
+    getNumb(numb) {
+      if (this.radio === 'Первое число' && numb !== '←') {
+        this.operand1 = String(this.operand1 + numb);
+      } else if (this.radio === 'Второе число' && numb !== '←') {
+        this.operand2 = String(this.operand2 + numb);
+      } else if (numb === '←' && this.radio === 'Первое число') {
+        this.operand1 = this.operand1.slice(0, -1);
+      } else if (numb === '←' && this.radio === 'Второе число'){
+        this.operand2 = this.operand2.slice(0, -1);
       }
     }
   }
@@ -82,8 +141,11 @@ export default {
 .btn {
   padding: 10px;
   margin-right: 7px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
-input{
+
+input {
   color: green;
   font-size: 20px;
   font-weight: bold;
