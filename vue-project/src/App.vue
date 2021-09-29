@@ -13,9 +13,6 @@ export default {
     PaymentList,
 
   },
-  methods: {
-
-  }
 }
 </script>
 

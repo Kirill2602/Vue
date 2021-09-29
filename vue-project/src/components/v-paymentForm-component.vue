@@ -11,25 +11,31 @@
 </template>
 
 <script>
+import {mapMutations, mapGetters} from 'vuex'
 export default {
   name: "v-paymentForm-component",
   data() {
     return {
+      id: 1,
       value: '',
       date: '',
       category: '',
       show:false
     }
   },
+  computed:{
+    ...mapGetters(['PAGE']),
+  },
   methods: {
+    ...mapMutations(['ADD_PAY']),
     addNewData(){
-      const newData = {
+      this.ADD_PAY({
+        id: this.id + this.PAGE.length,
         date: this.date,
         category: this.category,
         value: this.value
-      }
-      this.$emit('addNewD', newData)
-      console.log(newData)
+      })
+    this.value = this.date = this.category = ''
     }
   }
 }
@@ -54,6 +60,12 @@ form {
   padding: 10px;
   left: 0;
   margin-left: -1121px;
+  cursor: pointer;
+}
+.addNewCost:hover{
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  color: aqua;
+  transform: scale(1.1,1.1);
 }
 input {
   margin-bottom: 10px;
@@ -62,6 +74,7 @@ input {
   background-color: #aeaeae;
   color: white;
   padding: 5px;
+  cursor: pointer;
 }
 h1{
   text-align: left;
