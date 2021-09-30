@@ -1,43 +1,75 @@
 <template>
   <div>
     <h1>My personal costs</h1>
+    <nav class="nav">
+      <router-link class="routLink" to="/">Основная форма</router-link>
+      <router-link class="routLink" to="/Food?value=200">Шаблон №1. Food с ценой 200</router-link>
+      <router-link class="routLink" to="/Transport?value=50">Шаблон №2. Transport с ценой 50</router-link>
+      <router-link class="routLink" to="/Entertainment?value=2000">Шаблон №3. Entertainment с ценой 2000</router-link>
+    </nav>
     <button class="addNewCost" @click="show = !show">ADD NEW COST +</button>
-    <form v-if="show"><input v-model="category" placeholder="Payment description" type="text">
-      <input v-model="value" placeholder="Payment amount" type="text">
-      <input v-model="date" placeholder="Payment date" type="date">
-      <button type="button" @click="addNewData" class="addFormBtn" v-bind:disabled="date===''||value===''||category===''">ADD +</button>
+    <form v-if="show">
+      Описание: <input v-model="category" placeholder="Payment description" type="text">
+      Потраченная сумма: <input v-model="value" placeholder="Payment amount" type="text">
+      Дата: <input v-model="date" placeholder="Payment date" type="text">
+      <button type="button" @click="addNewData" class="addFormBtn"
+              v-bind:disabled="date===''||value===''||category===''">ADD +
+      </button>
     </form>
   </div>
 </template>
 
 <script>
 import {mapMutations, mapGetters} from 'vuex'
+
 export default {
   name: "v-paymentForm-component",
   data() {
     return {
       id: 1,
-      value: '',
+      value:  this.$route.query.value || '',
       date: '',
-      category: '',
-      show:false
+      category:  this.$route.path.slice(1) || '',
+      show: this.$route.query.value
     }
   },
-  computed:{
+  computed: {
     ...mapGetters(['PAGE']),
+    getDate(){
+  let date = new Date();
+ let currentYear = date.getFullYear();
+ let currentMonth = ("0" + (date.getMonth() +1)).slice(-2);
+ let currentDate = ("0" + (date.getDate())).slice(-2);
+ return `${currentYear}-${currentMonth}-${currentDate}`
+    }
   },
   methods: {
     ...mapMutations(['ADD_PAY']),
-    addNewData(){
+    addNewData() {
       this.ADD_PAY({
         id: this.id + this.PAGE.length,
         date: this.date,
         category: this.category,
         value: this.value
       })
-    this.value = this.date = this.category = ''
+      this.value = this.date = this.category = this.date = ''
+    },
+  },
+  watch: {
+    '$route': function (qwe, old) {
+      console.log(1, qwe)
+      console.log(2, old)
+      if (qwe.path !== old.path || qwe.query.value !== old.query.value ) {
+        console.log(444, qwe.path)
+        console.log(555, this)
+        this.category = qwe.path.slice(1)
+        this.value = qwe.query.value
+        this.date = this.getDate;
+        console.log(this.date)
+        this.show = qwe.query.value
+      }
     }
-  }
+  },
 }
 </script>
 
@@ -52,7 +84,7 @@ form {
   display: flex;
   flex-direction: column;
 }
-.addNewCost{
+.addNewCost {
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: #aeaeae;
@@ -62,21 +94,39 @@ form {
   margin-left: -1121px;
   cursor: pointer;
 }
-.addNewCost:hover{
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+.addNewCost:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   color: aqua;
-  transform: scale(1.1,1.1);
+  transform: scale(1.1, 1.1);
 }
 input {
   margin-bottom: 10px;
 }
-.addFormBtn{
+.addFormBtn {
   background-color: #aeaeae;
   color: white;
   padding: 5px;
   cursor: pointer;
 }
-h1{
+h1 {
   text-align: left;
+}
+.nav{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  border: 2px solid aqua;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #aeaeae;
+}
+.routLink{
+  text-decoration: none;
+  color: white;
+}
+.routLink:hover{
+  transform: scale(1.1, 1.1);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  color: aqua;
 }
 </style>

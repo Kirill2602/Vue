@@ -1,6 +1,9 @@
 <template>
   <div>
-    <PaymentForm @addNewD="addNewD"/>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+    <paymentForm/>
     <table class="table">
       <tr>
         <th class="th">#</th>
@@ -28,14 +31,12 @@
 </template>
 
 <script>
-import PaymentForm from "./v-paymentForm-component";
 import {mapGetters, mapMutations, mapActions} from 'vuex';
+import paymentForm from "./v-paymentForm-component";
 
 export default {
   name: "v-paymentList-component",
-  components: {
-    PaymentForm,
-  },
+  components: {paymentForm},
   data() {
     return {
       payPages: 10,
@@ -59,14 +60,13 @@ export default {
   methods: {
     ...mapActions(['GET_PAY_FROM_API']),
     ...mapMutations(['ADD_PAY']),
-    addNewD(data) {
-      this.payList = [this.ADD_PAY(data)]
-    },
     pageClick(p) {
       this.pageNumber = p;
-    }
+    },
+
   },
   mounted() {
+    console.log(33, this.$route.query.value)
     this.GET_PAY_FROM_API();
   }
 }
@@ -92,13 +92,15 @@ td {
   background-color: #aeaeae;
   color: white;
 }
-.pagination{
+
+.pagination {
   margin-top: 10px;
 }
 
-.paginateBtn{
+.paginateBtn {
   margin-right: 5px;
 }
+
 .paginateBtn:hover {
   background-color: #aeaeae;
   cursor: pointer;
