@@ -27,31 +27,36 @@ export default {
   data() {
     return {
       id: 1,
-      value:  this.$route.query.value || '',
+      value: this.$route.query.value || '',
       date: '',
-      category:  this.$route.path.slice(1) || '',
+      category: this.$route.path.slice(1) || '',
       show: this.$route.query.value
     }
   },
+
   computed: {
     ...mapGetters(['PAGE']),
-    getDate(){
-  let date = new Date();
- let currentYear = date.getFullYear();
- let currentMonth = ("0" + (date.getMonth() +1)).slice(-2);
- let currentDate = ("0" + (date.getDate())).slice(-2);
- return `${currentYear}-${currentMonth}-${currentDate}`
+    getDate() {
+      let date = new Date();
+      let currentYear = date.getFullYear();
+      let currentMonth = ("0" + (date.getMonth() + 1)).slice(-2);
+      let currentDate = ("0" + (date.getDate())).slice(-2);
+      return `${currentYear}-${currentMonth}-${currentDate}`
     }
   },
   methods: {
     ...mapMutations(['ADD_PAY']),
     addNewData() {
+      let min = Math.ceil(this.PAGE.length)
+      let max = Math.floor(100)
       this.ADD_PAY({
-        id: this.id + this.PAGE.length,
+        id: Math.floor(Math.random() * (max - min + 1)) + min,
         date: this.date,
         category: this.category,
         value: this.value
       })
+      console.log('Оно',this.PAGE)
+      console.log('ЭТО АЙДИ',this.id)
       this.value = this.date = this.category = this.date = ''
     },
   },
@@ -59,7 +64,7 @@ export default {
     '$route': function (qwe, old) {
       console.log(1, qwe)
       console.log(2, old)
-      if (qwe.path !== old.path || qwe.query.value !== old.query.value ) {
+      if (qwe.path !== old.path || qwe.query.value !== old.query.value) {
         console.log(444, qwe.path)
         console.log(555, this)
         this.category = qwe.path.slice(1)
@@ -84,6 +89,7 @@ form {
   display: flex;
   flex-direction: column;
 }
+
 .addNewCost {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -94,24 +100,29 @@ form {
   margin-left: -1121px;
   cursor: pointer;
 }
+
 .addNewCost:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   color: aqua;
   transform: scale(1.1, 1.1);
 }
+
 input {
   margin-bottom: 10px;
 }
+
 .addFormBtn {
   background-color: #aeaeae;
   color: white;
   padding: 5px;
   cursor: pointer;
 }
+
 h1 {
   text-align: left;
 }
-.nav{
+
+.nav {
   display: flex;
   justify-content: space-around;
   margin-bottom: 10px;
@@ -120,13 +131,15 @@ h1 {
   padding: 10px;
   background-color: #aeaeae;
 }
-.routLink{
+
+.routLink {
   text-decoration: none;
   color: white;
 }
-.routLink:hover{
+
+.routLink:hover {
   transform: scale(1.1, 1.1);
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   color: aqua;
 }
 </style>

@@ -6,13 +6,11 @@
 
 <script>
 import PaymentList from './components/v-paymentList-component'
-
 export default {
   name: 'App',
   components: {
-    PaymentList,
-
-  },
+    PaymentList
+  }
 }
 </script>
 
