@@ -31,9 +31,7 @@ export default new Vuex.Store({
                     state.page[i].date = newObject.date
                     state.page[i].value = newObject.value
                 }
-               // console.log('editData',newObject)
             }
-
         },
     },
     actions: {

@@ -80,7 +80,6 @@ export default {
     },
     getIndex(event, id) {
       this.id = id
-      console.log('88888888888', id)
       this.evnt = event.pageY;
       this.top = this.evnt + 10
     },
@@ -88,34 +87,22 @@ export default {
       if (this.visible === false) {
         this.top = this.top + 10
         this.visible = true
-        console.log('На открытии топ', this.top)
       } else {
         this.visible = false
         this.top = 0
-        console.log('На закрытии топ', this.top)
       }
     },
     editList() {
       this.visibleModal = true
       this.visible = false
       this.editObject = this.PAGE.find(pay => pay.id === this.id)
-      console.log("То, что цепляю при нажатии на редактирование!!!", this.editObject);
-      console.log('Редачу!!!!!!!! IDDDDDDDDDDDD', this.id)
     },
     closeModalWindow() {
       this.visibleModal = false
     },
     saveChangeObj(newObject) {
-      // this.EDIT_PAYMENT(this.id, )
       this.newObject = newObject.newPaymentData
       this.EDIT_PAYMENT(this.newObject)
-      console.log('000000000000', this.newObject)
-
-      //console.log(777,newObject)
-      // console.log(888, newObject.newPaymentData)
-      // this.editObject.value = newObject.newPaymentData.value
-      // this.editObject.category = newObject.newPaymentData.category
-      // this.editObject.date = newObject.newPaymentData.date
       this.visibleModal = false
     },
     removePay() {

@@ -55,22 +55,15 @@ export default {
         category: this.category,
         value: this.value
       })
-      console.log('Оно',this.PAGE)
-      console.log('ЭТО АЙДИ',this.id)
       this.value = this.date = this.category = this.date = ''
     },
   },
   watch: {
     '$route': function (qwe, old) {
-      console.log(1, qwe)
-      console.log(2, old)
       if (qwe.path !== old.path || qwe.query.value !== old.query.value) {
-        console.log(444, qwe.path)
-        console.log(555, this)
         this.category = qwe.path.slice(1)
         this.value = qwe.query.value
         this.date = this.getDate;
-        console.log(this.date)
         this.show = qwe.query.value
       }
     }
