@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p >Результат: {{ result }}</p>
+    <p>Результат: {{ result }}</p>
     <div class="inputs">
       <label for="operand1">Первое число
         <input name="operand1" value="Первое число" placeholder="0"
@@ -27,10 +27,12 @@
     <div><label for="check"><input v-model="checked" id="check" type="checkbox">Показать/Скрыть экранную
       клавиатуру</label></div>
 
-    <div v-show="checked">
-      <button @click="getNumb(numb)" class="btn"
+    <div class="keyboard" v-show="checked">
+      <button @click="getNumb(numb)"
+              class="btn"
               v-for="(numb,index) in numberKeyboard"
               :key="index"
+              :name="numb"
       >{{ numb }}
       </button>
     </div>
@@ -59,7 +61,7 @@ export default {
         'Возведение в степень'
       ],
       numberKeyboard: [
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, '←'
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '←'
       ],
       checked: true,
       radio: 'Первое число'
@@ -123,9 +125,9 @@ export default {
       } else if (this.radio === 'Второе число' && numb !== '←') {
         this.operand2 = String(this.operand2 + numb);
       } else if (numb === '←' && this.radio === 'Первое число') {
-        this.operand1 = this.operand1.slice(0, -1);
+        this.operand1 = String(this.operand1).slice(0, -1);
       } else if (numb === '←' && this.radio === 'Второе число') {
-        this.operand2 = this.operand2.slice(0, -1);
+        this.operand2 = String(this.operand2).slice(0, -1);
       }
     }
   }
