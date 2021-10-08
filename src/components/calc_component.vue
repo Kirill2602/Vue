@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p>Результат: {{ result }}</p>
+    <p >Результат: {{ result }}</p>
     <div class="inputs">
       <label for="operand1">Первое число
-        <input value="Первое число" placeholder="0"
+        <input name="operand1" value="Первое число" placeholder="0"
                v-bind:disabled="radio !== 'Первое число' "
                v-model.number="operand1"
                class="operand1"
@@ -11,6 +11,7 @@
                type="text"></label>
       <label for="operand2">Второе число
         <input
+            name="operand2"
             placeholder="0"
             v-bind:disabled="radio !== 'Второе число'"
             v-model.number="operand2"
@@ -19,6 +20,7 @@
     </div>
     <div class="buttons">
       <button v-bind:disabled="operand1 === '' || operand2 === ''" class="btn" v-for="operator in operators"
+              :name="operator"
               :key="operator" @click="calculate(operator)">{{ operator }}
       </button>
     </div>
@@ -28,7 +30,8 @@
     <div v-show="checked">
       <button @click="getNumb(numb)" class="btn"
               v-for="(numb,index) in numberKeyboard"
-              :key="index">{{ numb }}
+              :key="index"
+      >{{ numb }}
       </button>
     </div>
     <div>
@@ -121,7 +124,7 @@ export default {
         this.operand2 = String(this.operand2 + numb);
       } else if (numb === '←' && this.radio === 'Первое число') {
         this.operand1 = this.operand1.slice(0, -1);
-      } else if (numb === '←' && this.radio === 'Второе число'){
+      } else if (numb === '←' && this.radio === 'Второе число') {
         this.operand2 = this.operand2.slice(0, -1);
       }
     }
