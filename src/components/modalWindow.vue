@@ -1,14 +1,18 @@
 <template>
   <div class="wrapper">
-    <div class="modal">
-      <button @click="$keks.closeModal()" class="close">X</button>
+    <v-form class="modal">
+      <v-btn @click="$keks.closeModal()" class="red white--text close">X</v-btn>
       <h1>Редактирование</h1>
       <div class="modalInputs">
-        Описание: <input class="modalInput" v-model="newObj.category" type="text">
-        Потраченная сумма: <input class="modalInput" v-model="newObj.value" type="text">
-        Дата: <input class="modalInput" v-model="newObj.date" type="text"></div>
-      <button @click="saveNewObj(); $keks.saveChanges()">Сохранить</button>
-    </div>
+        Описание:
+        <v-text-field class="modalInput" v-model="newObj.category"/>
+        Потраченная сумма:
+        <v-text-field class="modalInput" v-model="newObj.value"/>
+        Дата:
+        <v-text-field class="modalInput" v-model="newObj.date"/>
+      </div>
+      <v-btn @click="saveNewObj(); $keks.saveChanges()">Сохранить</v-btn>
+    </v-form>
   </div>
 
 </template>
@@ -64,6 +68,8 @@ export default {
   top: 0;
   bottom: 0;
   height: 1000%;
+  width: 100vw;
+  z-index: 1000;
 }
 
 .modalInput {
@@ -76,7 +82,7 @@ export default {
 }
 
 .close {
-  margin-left: 366px;
+  margin-left: 300px;
   background-color: red;
   color: white;
   font-weight: bolder;

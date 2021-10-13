@@ -1,21 +1,28 @@
 <template>
   <div>
-    <h1>My personal costs</h1>
-    <nav class="nav">
-      <router-link class="routLink" to="/">Основная форма</router-link>
-      <router-link class="routLink" to="/Food?value=200">Шаблон №1. Food с ценой 200</router-link>
-      <router-link class="routLink" to="/Transport?value=50">Шаблон №2. Transport с ценой 50</router-link>
-      <router-link class="routLink" to="/Entertainment?value=2000">Шаблон №3. Entertainment с ценой 2000</router-link>
-    </nav>
-    <button class="addNewCost" @click="show = !show">ADD NEW COST +</button>
-    <form v-if="show">
-      Описание: <input v-model="category" placeholder="Payment description" type="text">
-      Потраченная сумма: <input v-model="value" placeholder="Payment amount" type="text">
-      Дата: <input v-model="date" placeholder="Payment date" type="text">
-      <button type="button" @click="addNewData" class="addFormBtn"
-              v-bind:disabled="date===''||value===''||category===''">ADD +
-      </button>
-    </form>
+    <v-container>
+      <h1>My personal costs</h1>
+      <v-app-bar>
+        <div class="nav">
+          <v-btn class="routLink" to="/">Home</v-btn>
+          <v-btn class="routLink" to="/Food?value=200">Template Food</v-btn>
+          <v-btn class="routLink" to="/Transport?value=50">Template Transport</v-btn>
+          <v-btn class="routLink" to="/Entertainment?value=2000">Template Entertainment</v-btn>
+        </div>
+      </v-app-bar>
+      <v-btn class="addNewCost" @click="show = !show">ADD NEW COST +</v-btn>
+      <v-form v-if="show">
+        Описание:
+        <v-text-field v-model="category" placeholder="Payment description"/>
+        Потраченная сумма:
+        <v-text-field v-model="value" placeholder="Payment amount"/>
+        Дата:
+        <v-text-field v-model="date" placeholder="Payment date"/>
+        <v-btn type="button" @click="addNewData" class="addFormBtn"
+               v-bind:disabled="date===''||value===''||category===''">ADD +
+        </v-btn>
+      </v-form>
+    </v-container>
   </div>
 </template>
 
@@ -84,14 +91,12 @@ form {
 }
 
 .addNewCost {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   background-color: #aeaeae;
   color: white;
   padding: 10px;
-  left: 0;
-  margin-left: -1121px;
-  cursor: pointer;
+  margin-left: -900px;
 }
 
 .addNewCost:hover {
@@ -114,25 +119,9 @@ input {
 h1 {
   text-align: left;
 }
-
-.nav {
+.nav{
+  width: 100%;
   display: flex;
   justify-content: space-around;
-  margin-bottom: 10px;
-  border: 2px solid aqua;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #aeaeae;
-}
-
-.routLink {
-  text-decoration: none;
-  color: white;
-}
-
-.routLink:hover {
-  transform: scale(1.1, 1.1);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  color: aqua;
 }
 </style>

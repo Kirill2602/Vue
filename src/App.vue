@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <PaymentList/>
+      <v-app>
+        <PaymentList/>
+      </v-app>
   </div>
 </template>
 
 <script>
 import PaymentList from './components/v-paymentList-component'
+
 export default {
   name: 'App',
   components: {

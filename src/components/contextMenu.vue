@@ -23,7 +23,7 @@ export default {
       ],
       stylesContext: {
         position: 'absolute',
-        right: '500px',
+        right: '455px',
         background: 'white',
         zIndex: '999',
         outline: 'none',
@@ -45,12 +45,15 @@ export default {
 .options:hover {
   background-color: #aeaeae;
 }
+
 .bounce-enter-active {
   animation: bounce-in .5s;
 }
+
 .bounce-leave-active {
   animation: bounce-in .5s reverse;
 }
+
 @keyframes bounce-in {
   0% {
     transform: scale(0);

@@ -1,37 +1,40 @@
 <template>
   <div>
+    <v-container>
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
     <paymentForm/>
     <context-menu v-if="visible" :top="this.top"/>
     <modal-window v-if="visibleModal" :edit-obj="this.editObject" @saveNewObj="saveChangeObj"/>
-    <table class="table">
-      <tr>
-        <th class="th">#</th>
-        <th class="th">DATE</th>
-        <th class="th">CATEGORY</th>
-        <th class="th">VALUE</th>
-      </tr>
-      <tr class="tr" v-for="(resD, index) in paginatedPage" :key="index">
-        <td>{{ resD.id }}</td>
-        <td>{{ resD.date }}</td>
-        <td>{{ resD.category }}</td>
-        <td class="td__icon">{{ resD.value }}
+    <div class="table">
+      <v-row>
+        <v-col class="th">#</v-col>
+        <v-col class="th">DATE</v-col>
+        <v-col class="th">CATEGORY</v-col>
+        <v-col class="th">VALUE</v-col>
+      </v-row>
+      <v-row class="tr" v-for="(resD, index) in paginatedPage" :key="index">
+        <v-col>{{ resD.id }}</v-col>
+        <v-col>{{ resD.date }}</v-col>
+        <v-col>{{ resD.category }}</v-col>
+        <v-col class="td__icon">{{ resD.value }}
           <p @click="$keks.openCloseContextMenu($event); getIndex($event, resD.id)"
              class="icon">⋮</p>
-        </td>
-      </tr>
-    </table>
+        </v-col>
+      </v-row>
+    </div>
     <div class="pagination">
-      <button class="paginateBtn"
+      <v-btn
+          class="paginateBtn"
               v-for="p in pages"
               :key="p"
               @click="pageClick(p)"
               :class="{'selectedPage': p === pageNumber}"
       >{{ p }}
-      </button>
+      </v-btn>
     </div>
+    </v-container>
   </div>
 </template>
 
@@ -48,7 +51,6 @@ export default {
     return {
       visible: false,
       visibleModal: false,
-      //index: '',
       evnt: '',
       top: 0,
       payPages: 10,
@@ -81,7 +83,8 @@ export default {
     getIndex(event, id) {
       this.id = id
       this.evnt = event.pageY;
-      this.top = this.evnt + 10
+      this.top = this.evnt - 50
+      console.log(this.evnt)
     },
     contextHandler() {
       if (this.visible === false) {
@@ -124,8 +127,8 @@ export default {
 <style scoped>
 .table {
   width: 800px;
-  border: 1px solid #000;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .tr {
