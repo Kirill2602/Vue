@@ -1,39 +1,39 @@
 <template>
   <div>
     <v-container>
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
-    <paymentForm/>
-    <context-menu v-if="visible" :top="this.top"/>
-    <modal-window v-if="visibleModal" :edit-obj="this.editObject" @saveNewObj="saveChangeObj"/>
-    <div class="table">
-      <v-row>
-        <v-col class="th">#</v-col>
-        <v-col class="th">DATE</v-col>
-        <v-col class="th">CATEGORY</v-col>
-        <v-col class="th">VALUE</v-col>
-      </v-row>
-      <v-row class="tr" v-for="(resD, index) in paginatedPage" :key="index">
-        <v-col>{{ resD.id }}</v-col>
-        <v-col>{{ resD.date }}</v-col>
-        <v-col>{{ resD.category }}</v-col>
-        <v-col class="td__icon">{{ resD.value }}
-          <p @click="$keks.openCloseContextMenu($event); getIndex($event, resD.id)"
-             class="icon">⋮</p>
-        </v-col>
-      </v-row>
-    </div>
-    <div class="pagination">
-      <v-btn
-          class="paginateBtn"
-              v-for="p in pages"
-              :key="p"
-              @click="pageClick(p)"
-              :class="{'selectedPage': p === pageNumber}"
-      >{{ p }}
-      </v-btn>
-    </div>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+      <paymentForm/>
+      <context-menu v-if="visible" :top="this.top"/>
+      <modal-window v-if="visibleModal" :edit-obj="this.editObject" @saveNewObj="saveChangeObj"/>
+      <div class="table">
+        <v-row>
+          <v-col class="th">#</v-col>
+          <v-col class="th">DATE</v-col>
+          <v-col class="th">CATEGORY</v-col>
+          <v-col class="th">VALUE</v-col>
+        </v-row>
+        <v-row class="tr" v-for="(resD, index) in paginatedPage" :key="index">
+          <v-col>{{ resD.id }}</v-col>
+          <v-col>{{ resD.date }}</v-col>
+          <v-col>{{ resD.category }}</v-col>
+          <v-col class="td__icon">{{ resD.value }}
+            <p @click="$keks.openCloseContextMenu($event); getIndex($event, resD.id)"
+               class="icon">⋮</p>
+          </v-col>
+        </v-row>
+      </div>
+      <div class="pagination">
+        <v-btn
+            class="paginateBtn"
+            v-for="p in pages"
+            :key="p"
+            @click="pageClick(p)"
+            :class="{'selectedPage': p === pageNumber}"
+        >{{ p }}
+        </v-btn>
+      </div>
     </v-container>
   </div>
 </template>
@@ -43,10 +43,12 @@ import {mapGetters, mapMutations, mapActions} from 'vuex';
 import paymentForm from "./v-paymentForm-component";
 import contextMenu from "./contextMenu";
 import modalWindow from "./modalWindow";
+import Pie from 'vue-chartjs';
 
 export default {
   name: "v-paymentList-component",
   components: {paymentForm, contextMenu, modalWindow},
+  extends: Pie,
   data() {
     return {
       visible: false,
