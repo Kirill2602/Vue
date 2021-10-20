@@ -24,12 +24,12 @@ export default new Vuex.Store({
         DELETE_PAYMENT: (state, id) => {
             state.page = state.page.filter(value => value.id !== id)
         },
-        EDIT_PAYMENT: (state, newObject) => {
+        EDIT_PAYMENT: (state, Obj) => {
             for (let i = 0; i < state.page.length; i++) {
-                if (state.page[i].id === newObject.id) {
-                    state.page[i].category = newObject.category
-                    state.page[i].date = newObject.date
-                    state.page[i].value = newObject.value
+                if (state.page[i].id === Obj.id) {
+                    state.page[i].category = Obj.category
+                    state.page[i].date = Obj.date
+                    state.page[i].value = Obj.value
                 }
             }
         },
