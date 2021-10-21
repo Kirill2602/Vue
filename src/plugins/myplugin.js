@@ -19,8 +19,7 @@ export default {
                 this.EventBus.$emit('closeModal')
             },
             saveChanges(newPaymentData){
-                console.log('Plugin', newPaymentData)
-                this.EventBus.$emit('saveChanges')
+                this.EventBus.$emit('saveChanges', newPaymentData)
             }
         }
     }

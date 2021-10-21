@@ -7,7 +7,7 @@
         Описание: <input class="modalInput" v-model="newObj.category" type="text">
         Потраченная сумма: <input class="modalInput" v-model="newObj.value" type="text">
         Дата: <input class="modalInput" v-model="newObj.date" type="text"></div>
-      <button @click="saveNewObj(newObj); $keks.saveChanges">Сохранить</button>
+      <button @click="$keks.saveChanges(newObj)">Сохранить</button>
     </div>
   </div>
 
@@ -27,11 +27,6 @@ export default {
       },
     }
   },
-  methods: {
-    saveNewObj() {
-      this.$emit('saveNewObj', this.newObj)
-    }
-  }
 }
 </script>
 

@@ -5,7 +5,7 @@
     </keep-alive>
     <paymentForm/>
     <context-menu v-if="visible" :top="this.top"/>
-    <modal-window v-if="visibleModal" :edit-obj="this.editObject" @saveNewObj="saveChangeObj(arguments)"/>
+    <modal-window v-if="visibleModal" :edit-obj="this.editObject"/>
     <table class="table">
       <tr>
         <th class="th">#</th>
@@ -98,8 +98,8 @@ export default {
     closeModalWindow() {
       this.visibleModal = false
     },
-    saveChangeObj(newData) {
-      this.EDIT_PAYMENT(newData[0])
+    saveChangeObj(newObj) {
+      this.EDIT_PAYMENT(newObj)
       this.visibleModal = false
     },
     removePay() {
@@ -113,7 +113,7 @@ export default {
     this.$keks.EventBus.$on('deletePayment', this.removePay)
     this.$keks.EventBus.$on('editPaymentList', this.editList)
     this.$keks.EventBus.$on('closeModal', this.closeModalWindow)
-    this.$keks.EventBus.$on('saveChanges', this.saveChangeObj(arguments))
+    this.$keks.EventBus.$on('saveChanges', this.saveChangeObj)
   }
 }
 </script>
