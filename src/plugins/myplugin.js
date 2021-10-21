@@ -18,8 +18,8 @@ export default {
             closeModal(){
                 this.EventBus.$emit('closeModal')
             },
-            saveChanges(){
-                this.EventBus.$emit('saveChanges')
+            saveChanges(newObject){
+                this.EventBus.$emit('saveChanges', newObject)
             }
         }
     }

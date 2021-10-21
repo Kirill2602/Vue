@@ -6,7 +6,7 @@
       </keep-alive>
       <paymentForm/>
       <context-menu v-if="visible" :top="this.top"/>
-      <modal-window v-if="visibleModal" :edit-obj="this.editObject" @saveNewObj="saveChangeObj"/>
+      <modal-window v-if="visibleModal" :edit-obj="this.editObject"/>
       <div class="table">
         <v-row>
           <v-col class="th">#</v-col>
@@ -86,7 +86,6 @@ export default {
       this.id = id
       this.evnt = event.pageY;
       this.top = this.evnt - 50
-      console.log(this.evnt)
     },
     contextHandler() {
       if (this.visible === false) {
@@ -106,8 +105,7 @@ export default {
       this.visibleModal = false
     },
     saveChangeObj(newObject) {
-      this.newObject = newObject.newPaymentData
-      this.EDIT_PAYMENT(this.newObject)
+      this.EDIT_PAYMENT(newObject)
       this.visibleModal = false
     },
     removePay() {

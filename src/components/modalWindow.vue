@@ -11,7 +11,7 @@
         Дата:
         <v-text-field class="modalInput" v-model="newObj.date"/>
       </div>
-      <v-btn @click="saveNewObj(); $keks.saveChanges()">Сохранить</v-btn>
+      <v-btn @click="$keks.saveChanges(newObj)">Сохранить</v-btn>
     </v-form>
   </div>
 
@@ -31,13 +31,6 @@ export default {
       }
     }
   },
-  methods: {
-    saveNewObj() {
-      this.$emit('saveNewObj', {
-        newPaymentData: this.newObj
-      })
-    }
-  }
 }
 </script>
 
